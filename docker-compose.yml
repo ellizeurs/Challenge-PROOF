@@ -1,13 +1,18 @@
 version: "3.9"
+## Define the services in container
 services:
   syslog:
+    ## Define the buid params
     build:
-      context: ./syslog
+      context: ./syslog ## Docker file folder
       dockerfile: Dockerfile
+    ## Translation of ports Container:PC
     ports:
       - 514:514/udp
+    ## Monitored folders PC:Container
     volumes:
       - ./syslog:/usr/app/syslog
+    ## .env files to scripts
     env_file:
       - .env
       - .env.syslog
@@ -15,18 +20,23 @@ services:
       - app-tier
 
   show-log:
+    ## Define the buid params
     build:
-      context: ./show-log
+      context: ./show-log ## Docker file folder
       dockerfile: Dockerfile
+    ## Monitored folders PC:Container
     volumes:
       - ./show-log:/usr/app/show-log
+    ## .env files to scripts
     env_file:
       - .env
     networks:
       - app-tier
 
   rabbitmq:
+    ## Use a public image
     image: 'bitnami/rabbitmq:3'
+    ## Difine rabbitmq parameters
     environment:
       - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
@@ -34,10 +44,12 @@ services:
       - RABBITMQ_MANAGEMENT_BIND_IP=${RABBITMQ_MANAGEMENT_BIND_IP}
     networks:
       - app-tier
+    ## Translation of ports Container:PC
     ports:
       - "5672:5672"
       - "15672:15672"
 
+## Create container network
 networks:
   app-tier:
     driver: bridge

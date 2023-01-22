@@ -1,24 +1,21 @@
-## Baixa a imagem do node com versão alpine (versão mais simplificada e leve)
+## Download Node Alpine image
 FROM node:alpine
 
-## Define o local onde o app vai ficar no disco do container
-## Pode ser o diretório que você quiser
+## Define the work directory on container disk
 WORKDIR /usr/app/syslog
 
-## Copia tudo que começa com package e termina com .json para dentro da pasta /usr/app
+## Copy everything that starts with package and ends with .json into the /usr/app/syslog folder
 COPY package*.json ./
 
-## Executa npm install para adicionar as dependências e criar a pasta node_modules
+## Run npm install to add dependences and create node_modules foldes
 RUN npm install
 
-## Copia tudo que está no diretório onde o arquivo Dockerfile está 
-## para dentro da pasta /usr/app do container
-## Vamos ignorar a node_modules por isso criaremos um .dockerignore
+## Copy all files on Docker file directory to /usr/app/syslog container folder
+## Except node_modules folder because .dockerignore folder
 COPY . .
 
-## Container ficará ouvindo os acessos na porta 3000
+## Container will be listening for accesses on port 3000
 EXPOSE 3000
 
-## Não se repete no Dockerfile
-## Executa o comando npm start para iniciar o script que que está no package.json
+## Run npm start to run start script on package.json
 CMD npm start
