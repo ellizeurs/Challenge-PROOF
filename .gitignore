@@ -1,0 +1,4 @@
+.env
+.env.syslog
+syslog/node_modules/
+show-log/node_modules/

@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  syslog:
+    build:
+      context: ./syslog
+      dockerfile: Dockerfile
+    ports:
+      - 514:514/udp
+    volumes:
+      - ./syslog:/usr/app/syslog
+    env_file:
+      - .env
+      - .env.syslog
+    networks:
+      - app-tier
+
+  show-log:
+    build:
+      context: ./show-log
+      dockerfile: Dockerfile
+    volumes:
+      - ./show-log:/usr/app/show-log
+    env_file:
+      - .env
+    networks:
+      - app-tier
+
+  rabbitmq:
+    image: 'bitnami/rabbitmq:3'
+    environment:
+      - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
+      - RABBITMQ_NODE_PORT_NUMBER=${RABBITMQ_NODE_PORT_NUMBER}
+      - RABBITMQ_MANAGEMENT_BIND_IP=${RABBITMQ_MANAGEMENT_BIND_IP}
+    networks:
+      - app-tier
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+networks:
+  app-tier:
+    driver: bridge
