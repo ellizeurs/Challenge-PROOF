@@ -1,5 +1,5 @@
 # Challenge PROOF
-
+## Docs
 Project of 3 docker containers, being a Syslog Server, a RabbitMQ Server and a script to display RabbitMQ output.
 Made for the challenge for PROOF.
 
@@ -18,6 +18,26 @@ Copy the .env files removing the .example from the name:
 $ cp ./.env.example ./.env
 $ cp ./.env.syslog.example ./.env.syslog
 ```
+###### Settings
+The .env files are preconfigured, but you can change them to modify server parameters.
+```sh
+# .env
+RABBITMQ_SERVER_ADDRESS="amqp://app-rabbitmq-1"
+RABBITMQ_USERNAME="root"
+RABBITMQ_PASSWORD="root"
+RABBITMQ_NODE_PORT_NUMBER="5672"
+RABBITMQ_MANAGEMENT_BIND_IP="0.0.0.0"
+```
+```sh
+# .env.syslog
+SYSLOG_SERVER_ADDRESS="0.0.0.0"
+SYSLOG_SERVER_PORT="514"
+```
+When changing, restart the container.
+### Containers
+#### Syslog
+#### Show-log
+#### RabbitMQ
 
 ### Starting Containers
 Run the command below in your Terminal or CMD to start the containers:
@@ -53,5 +73,4 @@ After the request you should see output similar to:
 app-show-log-1  | {"name": "your name"}
 ```
 
-##
-[Veja a documentação completa aqui.](https://github.com/ellizeurs/Challenge-PROOF/blob/master/DOCS.md)
+
