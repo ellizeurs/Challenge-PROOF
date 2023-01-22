@@ -1,4 +1,4 @@
-# Syslog
+# Challenge PROOF
 
 Project of 3 docker containers, being a Syslog Server, a RabbitMQ Server and a script to display RabbitMQ output.
 Made for the challenge for PROOF.
