@@ -30,23 +30,24 @@ In your terminal, run the below command to send UDP message to Syslog Server:
 ```bash
 $ nc -w0 -u [address] [port] <<< "{\"[key]\": \"[value]\"}"
 ```
-Alternatively, use the following python code to send the UDP message:
+Alternatively, use the following python code to send the UDP message with logging.Logger module:
 ```python
-import socket
+import logging
+from logging.handlers import SysLogHandler
 import json
 
-UDP_IP = "localhost"
-UDP_PORT = 514
 message = {
-    "name": "your name"
+    'name': 'your name'
 }
 
-print("UDP target IP: %s" % UDP_IP)
-print("UDP target port: %s" % UDP_PORT)
-print("message: %s" % json.dumps(message))
+my_logger = logging.getLogger('MyLogger')
+my_logger.setLevel(logging.DEBUG)
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.sendto(json.dumps(message).encode(), (UDP_IP, UDP_PORT))
+handler = SysLogHandler(address=('localhost', 514))
+
+my_logger.addHandler(handler)
+
+my_logger.info(json.dumps(message).encode())
 ```
 After the request you should see output similar to:
 ```bash
