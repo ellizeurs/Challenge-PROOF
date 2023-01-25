@@ -9,7 +9,13 @@ const queue = 'message'; // AMQP Channel
 server.on("message", (value) => { // Event triggered when Syslog Server received a message
     //value has date, host, protocol and message attributes
     try {
-        messageObj = JSON.parse(value.message); //Parse received string to JSON
+        message_pos_i = value.message.indexOf("{"); //Start JSON
+        message_pos_f = value.message.lastIndexOf("}"); // End JSON
+        logger_no = value.message.substr(1, message_pos_i - 2); // Logger number (if python Logger request)
+        message = value.message.substr(message_pos_i, message_pos_f - message_pos_i + 1); // Get JSON string
+        messageObj = JSON.parse(message); //Parse received string to JSON
+        if (parseInt(logger_no)) // Add logger number
+            messageObj['logger_no'] = parseInt(logger_no);
     } catch (e) { //JSON parse error
         console.log(e);
         return; // End transmission to AMQP Server
