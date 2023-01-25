@@ -1,7 +1,7 @@
 # Challenge PROOF
 
 Project of 3 docker containers, being a Syslog Server, a RabbitMQ Server and a script to display RabbitMQ output.
-Made for the challenge for PROOF.
+
 
 ### Prerequisites
 - **Docker**
@@ -55,3 +55,5 @@ app-show-log-1  | {"name": "your name"}
 
 ##
 [Veja a documentação completa aqui.](https://github.com/ellizeurs/Challenge-PROOF/blob/master/DOCS.md)
+
+Made for PROOF challenge.

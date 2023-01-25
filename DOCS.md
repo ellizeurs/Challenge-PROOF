@@ -1,7 +1,5 @@
 # Challenge PROOF
 ## Docs
-Project of 3 docker containers, being a Syslog Server, a RabbitMQ Server and a script to display RabbitMQ output.
-Made for the challenge for PROOF.
 
 ### Prerequisites
 - **Docker**
@@ -35,9 +33,22 @@ SYSLOG_SERVER_PORT="514"
 ```
 When changing, restart the container.
 ### Containers
+The project consists of 3 containers that run independently.
 #### Syslog
+Implements a Syslog Server in Node.js, which receives a JSON and sends it to the AMQP server.
+##### Inputs/Outputs
+- **input** - UDP request on syslog server port with a json message.
+- **output** - Message parsed to AMQP server.
 #### Show-log
+Implements a service to get and show messages from the AMQP queue.
+##### Inputs/Outputs
+- **input** - AMQP Server Queue Message.
+- **output** - Screen message display.
 #### RabbitMQ
+Run an AMQP server.
+##### Inputs/Outputs
+- **input** - Receive message from syslog server.
+- **output** - Send the message to the show_log app.
 
 ### Starting Containers
 Run the command below in your Terminal or CMD to start the containers:
@@ -74,3 +85,5 @@ app-show-log-1  | {"name": "your name"}
 ```
 
 
+
+Made for PROOF challenge
